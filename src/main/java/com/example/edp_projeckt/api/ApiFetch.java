@@ -29,10 +29,8 @@ public class ApiFetch {
 //        }
 //    }
 
-    public  String fetch() {
+    public  String fetch(String parameter, String value) {
 
-        String value = "beginner";
-        String parameter = "difficulty";
         String apiKey = "iuO5gg+JbV+MOT5iVOHsuQ==J56FBo2Xz6Cj1NjW";
         String apiUrl = "https://api.api-ninjas.com/v1/exercises?" + parameter + "=" + value;
         HttpRequest request = HttpRequest.newBuilder()
@@ -50,8 +48,8 @@ public class ApiFetch {
         }
     }
 
-    public  List<Exercise> fetchExercises() {
-        String responseBody = fetch();
+    public  List<Exercise> fetchExercises(String value, String parameter) {
+        String responseBody = fetch(value, parameter);
         try {
 
             TypeReference<List<Exercise>> typeReference = new TypeReference<>() {

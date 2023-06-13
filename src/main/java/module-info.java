@@ -5,6 +5,7 @@ module com.example.edp_projeckt {
     requires java.net.http;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
+    requires org.apache.commons.lang3;
 
     // dodawac wszsytkie package
     opens com.example.edp_projeckt to javafx.fxml;

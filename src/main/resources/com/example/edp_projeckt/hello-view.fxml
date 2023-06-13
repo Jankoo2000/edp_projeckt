@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
    <children>
-      <Button fx:id="fetchDataButton" layoutX="225.0" layoutY="60.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Wczytaj API" />
-      <Label fx:id="label1" layoutX="272.0" layoutY="24.0" text="Label" />
-      <Label fx:id="label2" layoutX="272.0" layoutY="157.0" text="Label" />
-      <Button fx:id="showText" layoutX="225.0" layoutY="200.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Pokaz napis" />
+      <Button fx:id="fetchDataButton" layoutX="226.0" layoutY="145.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Wczytaj API" />
+      <Label fx:id="label1" layoutX="287.0" layoutY="96.0" text="Label" />
+      <Label fx:id="label2" layoutX="286.0" layoutY="249.0" text="Label" />
+      <Button fx:id="showText" layoutX="225.0" layoutY="294.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Pokaz napis" />
+      <ChoiceBox fx:id="choiceBoxType" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="choiceBoxMuscle" layoutX="198.0" layoutY="21.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="choiceBoxDifficulty" layoutX="388.0" layoutY="21.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
