@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="1085.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
    <children>
       <Button fx:id="fetchDataButton" layoutX="589.0" layoutY="21.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Wczytaj API" />
       <Label fx:id="label1" layoutX="795.0" layoutY="26.0" text="Label" />
@@ -16,13 +16,13 @@
       <ChoiceBox fx:id="choiceBoxType" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
       <ChoiceBox fx:id="choiceBoxMuscle" layoutX="198.0" layoutY="21.0" prefWidth="150.0" />
       <ChoiceBox fx:id="choiceBoxDifficulty" layoutX="388.0" layoutY="21.0" prefWidth="150.0" />
-      <TableView fx:id="tableViewExercises" layoutX="34.0" layoutY="128.0" prefHeight="415.0" prefWidth="929.0">
+      <TableView fx:id="tableViewExercises" layoutX="34.0" layoutY="128.0" prefHeight="255.0" prefWidth="1036.0">
         <columns>
-          <TableColumn fx:id="name" prefWidth="180.0" text="name" />
-          <TableColumn fx:id="type" minWidth="0.0" prefWidth="99.0" text="type" />
-            <TableColumn fx:id="muscle" prefWidth="83.0" text="muscle" />
-            <TableColumn fx:id="equipment" prefWidth="105.0" text="equipment" />
-            <TableColumn fx:id="difficulty" prefWidth="88.0" text="difficulty" />
+          <TableColumn fx:id="name" prefWidth="103.0" text="name" />
+          <TableColumn fx:id="type" minWidth="0.0" prefWidth="102.0" text="type" />
+            <TableColumn fx:id="muscle" prefWidth="172.0" text="muscle" />
+            <TableColumn fx:id="equipment" prefWidth="154.0" text="equipment" />
+            <TableColumn fx:id="difficulty" prefWidth="177.0" text="difficulty" />
             <TableColumn fx:id="instructions" prefWidth="373.0" text="instructions" />
         </columns>
       </TableView>

@@ -6,24 +6,26 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 
-import java.awt.event.ActionEvent;
-import java.util.Collections;
+import java.awt.event.MouseEvent;
+import java.beans.EventHandler;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.replaceAll;
 
 public class ExerciseController {
     @FXML
@@ -41,6 +43,9 @@ public class ExerciseController {
     private String[] difficulties = {null, "beginner", "intermediate", "expert"};
     private ApiFetch apiFetch = new ApiFetch();
 
+    public ExerciseController() {
+    }
+
 
     @FXML
     public void initialize() {
@@ -50,13 +55,22 @@ public class ExerciseController {
         choiceBoxMuscle.getItems().addAll(muslces);
         choiceBoxDifficulty.getItems().addAll(difficulties);
 
+        tableViewExercises.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2 && !tableViewExercises.getSelectionModel().isEmpty()) {
+                Exercise selectedPerson = tableViewExercises.getSelectionModel().getSelectedItem();
+                showDetailsWindow(selectedPerson);
+            }
+        });
+
+
         choiceBoxType.setOnAction(e -> {
             String selectedOption = choiceBoxType.getValue();
             System.out.println("Selected option: " + selectedOption);
         });
 
         showText.setOnAction(e -> {
-            label2.setText("Zupa ziemniakowa");
+
+            label2.setText(String.valueOf((Math.random())));
         });
 
         fetchDataButton.setOnAction(e -> {
@@ -64,7 +78,10 @@ public class ExerciseController {
             Task<List<Exercise>> fetchDataTask = new Task<List<Exercise>>() {
                 @Override
                 protected List<Exercise> call() throws Exception {
-                    return fetchDataFromAPI();
+                    var x = fetchDataFromAPI();
+                    System.out.println("SIZE after filter " + x.size());
+                    return x;
+//                    return fetchDataFromAPI();
                 }
             };
 
@@ -90,11 +107,11 @@ public class ExerciseController {
         if (resultChoiceBoxType.isEmpty() && resultChoiceBoxMuscle.isEmpty() && resultChoiceBoxDifficulty.isEmpty()) {
 //            System.out.println(choiceBoxType.getId() + " : " + apiFetch.fetchExercises("", "").toString());
             exerciseList.addAll(apiFetch.fetchExercises("", ""));
-            System.out.println("size " + exerciseList.size());
+            System.out.println("size aa " + exerciseList.size());
         } else {
             if (resultChoiceBoxType.isPresent()) {
 //                System.out.println(choiceBoxType.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxType.get().getLeft(), resultChoiceBoxType.get().getRight()).toString());
-                exerciseList.addAll(apiFetch.fetchExercises("", ""));
+                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxType.get().getLeft(), resultChoiceBoxType.get().getRight()));
                 System.out.println("size " + exerciseList.size());
 
             }
@@ -107,15 +124,37 @@ public class ExerciseController {
             if (resultChoiceBoxDifficulty.isPresent()) {
 //                System.out.println(choiceBoxDifficulty.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxDifficulty.get().getLeft(), resultChoiceBoxDifficulty.get().getRight()).toString());
                 exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxDifficulty.get().getLeft(), resultChoiceBoxDifficulty.get().getRight()));
+                System.out.println(exerciseList);
                 System.out.println("size " + exerciseList.size());
 
             }
         }
 
-        System.out.println("total size " + exerciseList.size());
-        System.out.println(exerciseList);
+        if (resultChoiceBoxType.isPresent()) {
+            exerciseList = exerciseList
+                    .stream()
+                    .filter(e -> e.getType().equals(resultChoiceBoxType.get().getRight()))
+                    .collect(Collectors.toList());
+        }
+        if (resultChoiceBoxMuscle.isPresent()) {
+            exerciseList = exerciseList
+                    .stream()
+                    .filter(e -> e.getMuscle().equals(resultChoiceBoxMuscle.get().getRight()))
+                    .collect(Collectors.toList());
+        }
+        if (resultChoiceBoxDifficulty.isPresent()) {
+            exerciseList = exerciseList
+                    .stream()
+                    .filter(e -> e.getDifficulty().equals(resultChoiceBoxDifficulty.get().getRight()))
+                    .collect(Collectors.toList());
+        }
 
-        return exerciseList.stream().distinct().collect(Collectors.toList());
+
+        // jak filtruje po null czy "" to lista nie jest napisywana wiec zostaje ta stara
+        return exerciseList
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private void updateUIWithData(List<Exercise> exerciseList) {
@@ -126,6 +165,7 @@ public class ExerciseController {
         }
         ObservableList<Exercise> data = FXCollections.observableArrayList(exerciseList);
         tableViewExercises.setItems(data);
+        label1.setText("Loaded");
     }
 
     private Optional<Pair<String, String>> setCheckboxAction(ChoiceBox<String> choiceBox) {
@@ -141,15 +181,38 @@ public class ExerciseController {
     }
 
     public void initTableView() {
-        TableColumn<Exercise, Number> indexColumn = new TableColumn<Exercise, Number>("#");
-        indexColumn.setSortable(false);
-        indexColumn.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(tableViewExercises.getItems().indexOf(column.getValue())));
+
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         muscle.setCellValueFactory(new PropertyValueFactory<>("muscle"));
         equipment.setCellValueFactory(new PropertyValueFactory<>("equipment"));
         difficulty.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
         instructions.setCellValueFactory(new PropertyValueFactory<>("instructions"));
+        instructions.setResizable(true);
+
     }
 
+    private void showDetailsWindow(Exercise exercise) {
+        Stage detailsStage = new Stage();
+        detailsStage.setTitle("Person Details");
+
+        VBox vbox = new VBox();
+        vbox.setSpacing(10);
+
+        Label name = new Label(exercise.getName());
+        Label type = new Label(exercise.getType());
+        Label muscle = new Label(exercise.getMuscle());
+        Label equipment = new Label(exercise.getEquipment());
+        Label difficulty = new Label(exercise.getDifficulty());
+        Label instructions = new Label(exercise.getInstructions());
+        instructions.setWrapText(true);
+
+        vbox.getChildren().addAll(
+                name, type, muscle, equipment, difficulty, instructions
+        );
+
+        Scene scene = new Scene(vbox, 200, 150);
+        detailsStage.setScene(scene);
+        detailsStage.show();
+    }
 }
