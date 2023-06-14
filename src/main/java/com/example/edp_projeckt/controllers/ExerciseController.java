@@ -96,66 +96,99 @@ public class ExerciseController {
         });
     }
 
-
     private List<Exercise> fetchDataFromAPI() {
-
-        List<Exercise> exerciseList = new LinkedList<Exercise>();
+        List<Exercise> exerciseList = new LinkedList<>();
         var resultChoiceBoxType = setCheckboxAction(choiceBoxType);
         var resultChoiceBoxMuscle = setCheckboxAction(choiceBoxMuscle);
         var resultChoiceBoxDifficulty = setCheckboxAction(choiceBoxDifficulty);
 
         if (resultChoiceBoxType.isEmpty() && resultChoiceBoxMuscle.isEmpty() && resultChoiceBoxDifficulty.isEmpty()) {
-//            System.out.println(choiceBoxType.getId() + " : " + apiFetch.fetchExercises("", "").toString());
             exerciseList.addAll(apiFetch.fetchExercises("", ""));
-            System.out.println("size aa " + exerciseList.size());
         } else {
-            if (resultChoiceBoxType.isPresent()) {
-//                System.out.println(choiceBoxType.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxType.get().getLeft(), resultChoiceBoxType.get().getRight()).toString());
-                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxType.get().getLeft(), resultChoiceBoxType.get().getRight()));
-                System.out.println("size " + exerciseList.size());
-
-            }
-            if (resultChoiceBoxMuscle.isPresent()) {
-//                System.out.println(choiceBoxMuscle.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxMuscle.get().getLeft(), resultChoiceBoxMuscle.get().getRight()).toString());
-                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxMuscle.get().getLeft(), resultChoiceBoxMuscle.get().getRight()));
-                System.out.println("size " + exerciseList.size());
-
-            }
-            if (resultChoiceBoxDifficulty.isPresent()) {
-//                System.out.println(choiceBoxDifficulty.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxDifficulty.get().getLeft(), resultChoiceBoxDifficulty.get().getRight()).toString());
-                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxDifficulty.get().getLeft(), resultChoiceBoxDifficulty.get().getRight()));
-                System.out.println(exerciseList);
-                System.out.println("size " + exerciseList.size());
-
-            }
+            exerciseList.addAll(apiFetch.fetchExercises(
+                    resultChoiceBoxType.map(Pair::getLeft).orElse(""),
+                    resultChoiceBoxType.map(Pair::getRight).orElse("")
+            ));
+            exerciseList.addAll(apiFetch.fetchExercises(
+                    resultChoiceBoxMuscle.map(Pair::getLeft).orElse(""),
+                    resultChoiceBoxMuscle.map(Pair::getRight).orElse("")
+            ));
+            exerciseList.addAll(apiFetch.fetchExercises(
+                    resultChoiceBoxDifficulty.map(Pair::getLeft).orElse(""),
+                    resultChoiceBoxDifficulty.map(Pair::getRight).orElse("")
+            ));
         }
 
-        if (resultChoiceBoxType.isPresent()) {
-            exerciseList = exerciseList
-                    .stream()
-                    .filter(e -> e.getType().equals(resultChoiceBoxType.get().getRight()))
-                    .collect(Collectors.toList());
-        }
-        if (resultChoiceBoxMuscle.isPresent()) {
-            exerciseList = exerciseList
-                    .stream()
-                    .filter(e -> e.getMuscle().equals(resultChoiceBoxMuscle.get().getRight()))
-                    .collect(Collectors.toList());
-        }
-        if (resultChoiceBoxDifficulty.isPresent()) {
-            exerciseList = exerciseList
-                    .stream()
-                    .filter(e -> e.getDifficulty().equals(resultChoiceBoxDifficulty.get().getRight()))
-                    .collect(Collectors.toList());
-        }
-
-
-        // jak filtruje po null czy "" to lista nie jest napisywana wiec zostaje ta stara
-        return exerciseList
-                .stream()
+        exerciseList = exerciseList.stream()
+                .filter(e -> resultChoiceBoxType.isEmpty() || e.getType().equals(resultChoiceBoxType.get().getRight()))
+                .filter(e -> resultChoiceBoxMuscle.isEmpty() || e.getMuscle().equals(resultChoiceBoxMuscle.get().getRight()))
+                .filter(e -> resultChoiceBoxDifficulty.isEmpty() || e.getDifficulty().equals(resultChoiceBoxDifficulty.get().getRight()))
                 .distinct()
                 .collect(Collectors.toList());
+
+        return exerciseList;
     }
+
+
+//    private List<Exercise> fetchDataFromAPI() {
+//
+//        List<Exercise> exerciseList = new LinkedList<Exercise>();
+//        var resultChoiceBoxType = setCheckboxAction(choiceBoxType);
+//        var resultChoiceBoxMuscle = setCheckboxAction(choiceBoxMuscle);
+//        var resultChoiceBoxDifficulty = setCheckboxAction(choiceBoxDifficulty);
+//
+//        if (resultChoiceBoxType.isEmpty() && resultChoiceBoxMuscle.isEmpty() && resultChoiceBoxDifficulty.isEmpty()) {
+////            System.out.println(choiceBoxType.getId() + " : " + apiFetch.fetchExercises("", "").toString());
+//            exerciseList.addAll(apiFetch.fetchExercises("", ""));
+//            System.out.println("size aa " + exerciseList.size());
+//        } else {
+//            if (resultChoiceBoxType.isPresent()) {
+////                System.out.println(choiceBoxType.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxType.get().getLeft(), resultChoiceBoxType.get().getRight()).toString());
+//                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxType.get().getLeft(), resultChoiceBoxType.get().getRight()));
+//                System.out.println("size " + exerciseList.size());
+//
+//            }
+//            if (resultChoiceBoxMuscle.isPresent()) {
+////                System.out.println(choiceBoxMuscle.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxMuscle.get().getLeft(), resultChoiceBoxMuscle.get().getRight()).toString());
+//                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxMuscle.get().getLeft(), resultChoiceBoxMuscle.get().getRight()));
+//                System.out.println("size " + exerciseList.size());
+//
+//            }
+//            if (resultChoiceBoxDifficulty.isPresent()) {
+////                System.out.println(choiceBoxDifficulty.getId() + " : " + apiFetch.fetchExercises(resultChoiceBoxDifficulty.get().getLeft(), resultChoiceBoxDifficulty.get().getRight()).toString());
+//                exerciseList.addAll(apiFetch.fetchExercises(resultChoiceBoxDifficulty.get().getLeft(), resultChoiceBoxDifficulty.get().getRight()));
+//                System.out.println(exerciseList);
+//                System.out.println("size " + exerciseList.size());
+//
+//            }
+//        }
+//
+//        if (resultChoiceBoxType.isPresent()) {
+//            exerciseList = exerciseList
+//                    .stream()
+//                    .filter(e -> e.getType().equals(resultChoiceBoxType.get().getRight()))
+//                    .collect(Collectors.toList());
+//        }
+//        if (resultChoiceBoxMuscle.isPresent()) {
+//            exerciseList = exerciseList
+//                    .stream()
+//                    .filter(e -> e.getMuscle().equals(resultChoiceBoxMuscle.get().getRight()))
+//                    .collect(Collectors.toList());
+//        }
+//        if (resultChoiceBoxDifficulty.isPresent()) {
+//            exerciseList = exerciseList
+//                    .stream()
+//                    .filter(e -> e.getDifficulty().equals(resultChoiceBoxDifficulty.get().getRight()))
+//                    .collect(Collectors.toList());
+//        }
+//
+//
+//        // jak filtruje po null czy "" to lista nie jest napisywana wiec zostaje ta stara
+//        return exerciseList
+//                .stream()
+//                .distinct()
+//                .collect(Collectors.toList());
+//    }
 
     private void updateUIWithData(List<Exercise> exerciseList) {
         System.out.println("Received total size " + exerciseList.size());
