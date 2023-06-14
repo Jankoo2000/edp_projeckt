@@ -3,16 +3,28 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="982.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
    <children>
-      <Button fx:id="fetchDataButton" layoutX="226.0" layoutY="145.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Wczytaj API" />
-      <Label fx:id="label1" layoutX="287.0" layoutY="96.0" text="Label" />
-      <Label fx:id="label2" layoutX="286.0" layoutY="249.0" text="Label" />
-      <Button fx:id="showText" layoutX="225.0" layoutY="294.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Pokaz napis" />
+      <Button fx:id="fetchDataButton" layoutX="589.0" layoutY="21.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Wczytaj API" />
+      <Label fx:id="label1" layoutX="795.0" layoutY="26.0" text="Label" />
+      <Label fx:id="label2" layoutX="795.0" layoutY="89.0" text="Label" />
+      <Button fx:id="showText" layoutX="589.0" layoutY="84.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Pokaz napis" />
       <ChoiceBox fx:id="choiceBoxType" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
       <ChoiceBox fx:id="choiceBoxMuscle" layoutX="198.0" layoutY="21.0" prefWidth="150.0" />
       <ChoiceBox fx:id="choiceBoxDifficulty" layoutX="388.0" layoutY="21.0" prefWidth="150.0" />
+      <TableView fx:id="tableViewExercises" layoutX="34.0" layoutY="128.0" prefHeight="415.0" prefWidth="929.0">
+        <columns>
+          <TableColumn fx:id="name" prefWidth="180.0" text="name" />
+          <TableColumn fx:id="type" minWidth="0.0" prefWidth="99.0" text="type" />
+            <TableColumn fx:id="muscle" prefWidth="83.0" text="muscle" />
+            <TableColumn fx:id="equipment" prefWidth="105.0" text="equipment" />
+            <TableColumn fx:id="difficulty" prefWidth="88.0" text="difficulty" />
+            <TableColumn fx:id="instructions" prefWidth="373.0" text="instructions" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

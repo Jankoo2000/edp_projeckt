@@ -15,19 +15,6 @@ public class ApiFetch {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-//    public static void main(String[] args) throws IOException {
-//        var exerecieses = fetchExercises();
-//
-//        for (var x : exerecieses) {
-//            System.out.println(x.name());
-//            System.out.println(x.type());
-//            System.out.println(x.muscle());
-//            System.out.println(x.equipment());
-//            System.out.println(x.difficulty());
-//            System.out.println(x.instructions());
-//            System.out.println("---------------------------");
-//        }
-//    }
 
     public  String fetch(String parameter, String value) {
 
