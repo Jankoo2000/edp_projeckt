@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlManager {
-    private final Connection connection = DriverManager.getConnection("jdbc:sqlite:mydatabase.db");
     private final String url = "jdbc:sqlite:D://EDP_projekt//edp_projeckt//mydatabase.db";
+    private final Connection connection = DriverManager.getConnection(url);
+
 
     public SqlManager() throws SQLException {
         try (connection) {
@@ -45,8 +46,7 @@ public class SqlManager {
 
     public void insertExercise(String name, String type, String muscle, String equipment, String difficulty,
                                String instructions, String sets, String reps, String date) {
-        // Connection parameters
-        // SQL query for inserting data
+
         String insertQuery = "INSERT INTO ExerciseTable(name, type, muscle, equipment, difficulty, instructions, sets, reps, date) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -92,18 +92,6 @@ public class SqlManager {
                 String reps = rs.getString("reps");
                 String exerciseDate = rs.getString("date");
                 trainingExercises.add(new TrainingExercise(name, muscle,sets,reps));
-//                // Perform any desired actions with the retrieved data
-//                System.out.println("Exercise ID: " + id);
-//                System.out.println("Name: " + name);
-//                System.out.println("Type: " + type);
-//                System.out.println("Muscle: " + muscle);
-//                System.out.println("Equipment: " + equipment);
-//                System.out.println("Difficulty: " + difficulty);
-//                System.out.println("Instructions: " + instructions);
-//                System.out.println("Sets: " + sets);
-//                System.out.println("Reps: " + reps);
-//                System.out.println("Date: " + exerciseDate);
-//                System.out.println("----------------------------------");
             }
 
             rs.close();
@@ -112,6 +100,23 @@ public class SqlManager {
         }
         return trainingExercises;
 
+    }
+
+    public void deleteFromDB(String name, String muscle, String sets, String reps)
+    {
+
+        try (Connection connection = DriverManager.getConnection(url);
+             Statement statement = connection.createStatement()) {
+
+            String deleteQuery = "DELETE FROM ExerciseTable WHERE name ='" + name + "' and muscle='" + muscle + "' and sets='" + sets + "' and reps ='" + reps + "'";
+
+            statement.executeUpdate(deleteQuery);
+
+            System.out.println("Pierwszy rekord został usunięty z bazy danych.");
+
+        } catch (SQLException e) {
+            System.err.println("Wystąpił błąd podczas usuwania rekordu: " + e.getMessage());
+        }
     }
 }
 

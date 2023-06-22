@@ -1,12 +1,15 @@
 package com.example.edp_projeckt.controllers;
 
+import com.example.edp_projeckt.Main;
 import com.example.edp_projeckt.api.ApiFetch;
 import com.example.edp_projeckt.api.Exercise;
 import com.example.edp_projeckt.data_base.SqlManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -19,6 +22,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -32,7 +36,7 @@ public class ExerciseController {
     @FXML
     private Label label1, label2;
     @FXML
-    private Button fetchDataButton, showText;
+    private Button fetchDataButton, showText, calendarButton;
     @FXML
     private TableView<Exercise> tableViewExercises;
     @FXML
@@ -46,6 +50,7 @@ public class ExerciseController {
     SqlManager sqlManager = new SqlManager();
     Date selectedDate;
     String sets, reps;
+
     public ExerciseController() throws SQLException {
     }
 
@@ -67,7 +72,6 @@ public class ExerciseController {
 
         choiceBoxType.setOnAction(e -> {
             String selectedOption = choiceBoxType.getValue();
-//            System.out.println("Selected option: " + selectedOption);
         });
 
         showText.setOnAction(e -> {
@@ -91,7 +95,16 @@ public class ExerciseController {
 
             Thread fetchDataThread = new Thread(fetchDataTask);
             fetchDataThread.start();
-//            System.out.println("Thread ID: " + fetchDataThread.threadId());
+        });
+
+        calendarButton.setOnAction(event -> {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("calendar-view.fxml"));
+            try {
+                stage.setScene(new Scene(fxmlLoader.load(), 590, 340));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -138,12 +151,9 @@ public class ExerciseController {
 
     private Optional<Pair<String, String>> setCheckboxAction(ChoiceBox<String> choiceBox) {
         String selectedOption = choiceBox.getValue();
-//        System.out.println("S " + selectedOption);
         if (selectedOption != null) {
-//            System.out.println("Selected option: " + selectedOption);
             return Optional.of(Pair.of(choiceBox.getId().replaceAll("choiceBox", "").toLowerCase(), choiceBox.getValue()));
         } else {
-//            System.out.println("No option selected");
             return Optional.empty();
         }
     }
@@ -193,9 +203,7 @@ public class ExerciseController {
             }
         });
 
-        // Dodaj przycisk "Dodaj do planu treningowego"
         Button addToPlanButton = new Button("Add to training plan");
-
 
         // Dodaj podpisy nad polami tekstowymi i kalendarzem
         Label value1Label = new Label("Sets");
@@ -227,19 +235,17 @@ public class ExerciseController {
         detailsStage.show();
 
 
-
-
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             selectedDate = Date.valueOf(datePicker.getValue());
             System.out.println("Selected date: " + selectedDate);
         });
 
-        value1TextField.setOnAction(event ->{
+        value1TextField.setOnAction(event -> {
             sets = value1TextField.getText();
             System.out.println("SETS :" + sets);
         });
 
-        value2TextField.setOnAction(event ->{
+        value2TextField.setOnAction(event -> {
             reps = value2TextField.getText();
             System.out.println("REPS :" + reps);
         });
@@ -251,21 +257,21 @@ public class ExerciseController {
                 throw new RuntimeException(e);
             }
         });
-        sqlManager.retrieveExercisesByDate("2023-06-21");
 
     }
 
 
     private void addToTrainingPlan(Exercise exercise, String sets, String reps, String date) throws SQLException {
-        sqlManager.insertExercise(exercise.getName(),
-                                exercise.getType(),
-                                exercise.getMuscle(),
-                                exercise.getEquipment(),
-                                exercise.getDifficulty(),
-                                exercise.getInstructions(),
-                                sets,
-                                reps,
-                                date);
+        sqlManager.insertExercise(
+                exercise.getName(),
+                exercise.getType(),
+                exercise.getMuscle(),
+                exercise.getEquipment(),
+                exercise.getDifficulty(),
+                exercise.getInstructions(),
+                sets,
+                reps,
+                date);
     }
 }
 

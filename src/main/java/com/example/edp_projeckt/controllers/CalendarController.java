@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -24,6 +21,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CalendarController implements Initializable {
@@ -53,12 +51,23 @@ public class CalendarController implements Initializable {
         });
 
         addExercise.setOnAction(event -> {
-            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("exercise-view.fxml"));
             try {
                 stage.setScene(new Scene(fxmlLoader.load(), 1150, 400));
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        });
+
+        tableViewCalendar.setOnMouseClicked(mouseEvent -> {
+            TrainingExercise selectedExercise = tableViewCalendar.getSelectionModel().getSelectedItem();
+            if (selectedExercise != null) {
+                String name = selectedExercise.getName();
+                String muscle = selectedExercise.getMuscle();
+                String sets = selectedExercise.getSets();
+                String reps = selectedExercise.getReps();
+                showConfirmationDialog(name, muscle, sets, reps);
             }
         });
     }
@@ -76,6 +85,27 @@ public class CalendarController implements Initializable {
 
         ObservableList<TrainingExercise> exerciseList = FXCollections.observableArrayList(exercises);
         tableViewCalendar.setItems(exerciseList);
+    }
+
+
+    private void showConfirmationDialog(String name, String muscle, String sets, String reps) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Potwierdzenie");
+        alert.setHeaderText("Czy na pewno chcesz usunąć pierwszy rekord?");
+        alert.setContentText("Ta operacja jest nieodwracalna.");
+
+        // Dodawanie przycisków Tak i Nie
+        ButtonType buttonTypeYes = new ButtonType("Tak");
+        ButtonType buttonTypeNo = new ButtonType("Nie");
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        // Obsługa wybranego przycisku
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == buttonTypeYes) {
+            sqlManager.deleteFromDB(name, muscle, sets, reps);
+            updateUIWithData(sqlManager.retrieveExercisesByDate(selectedDate));
+        }
     }
 
 }
