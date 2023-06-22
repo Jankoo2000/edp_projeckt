@@ -1,4 +1,4 @@
-package com.example.edp_projeckt;
+package com.example.edp_projeckt.utils;
 
 public class TrainingExercise {
     private String name;

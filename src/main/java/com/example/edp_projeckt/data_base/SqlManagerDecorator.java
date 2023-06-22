@@ -1,6 +1,6 @@
 package com.example.edp_projeckt.data_base;
 
-import com.example.edp_projeckt.TrainingExercise;
+import com.example.edp_projeckt.utils.TrainingExercise;
 
 import java.util.List;
 

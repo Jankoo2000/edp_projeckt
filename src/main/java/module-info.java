@@ -18,4 +18,6 @@ module com.example.edp_projeckt {
     exports com.example.edp_projeckt;
     exports com.example.edp_projeckt.controllers;
     exports com.example.edp_projeckt.api;
+    exports com.example.edp_projeckt.utils;
+    opens com.example.edp_projeckt.utils to javafx.fxml;
 }

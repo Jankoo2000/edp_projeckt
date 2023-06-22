@@ -1,5 +1,6 @@
 package com.example.edp_projeckt.api;
 
+import com.example.edp_projeckt.utils.AppConfig;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -14,11 +15,14 @@ import java.util.List;
 public class ApiFetch {
     private static final HttpClient httpClient = HttpClient.newHttpClient();
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final AppConfig appConfig = new AppConfig();
 
 
     public  String fetch(String parameter, String value) {
 
-        String apiKey = "iuO5gg+JbV+MOT5iVOHsuQ==J56FBo2Xz6Cj1NjW";
+
+//        String apiKey = "iuO5gg+JbV+MOT5iVOHsuQ==J56FBo2Xz6Cj1NjW";
+        String apiKey = appConfig.getProperty("app.api_key");
         String apiUrl = "https://api.api-ninjas.com/v1/exercises?" + parameter + "=" + value;
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))

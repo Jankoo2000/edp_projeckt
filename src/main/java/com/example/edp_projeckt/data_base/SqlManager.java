@@ -1,6 +1,7 @@
 package com.example.edp_projeckt.data_base;
 
-import com.example.edp_projeckt.TrainingExercise;
+import com.example.edp_projeckt.api.Exercise;
+import com.example.edp_projeckt.utils.TrainingExercise;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -117,6 +118,7 @@ public class SqlManager implements SqlManagerInterface{
             System.err.println("Wystąpił błąd podczas usuwania rekordu: " + e.getMessage());
         }
     }
+
 }
 
 

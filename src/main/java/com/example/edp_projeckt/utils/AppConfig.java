@@ -1,4 +1,4 @@
-package com.example.edp_projeckt;
+package com.example.edp_projeckt.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
