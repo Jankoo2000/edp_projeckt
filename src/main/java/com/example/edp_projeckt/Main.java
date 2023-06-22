@@ -12,16 +12,15 @@ import java.io.IOException;
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException, InterruptedException {
+    public void start(Stage stage) throws IOException {
 
+        AppConfig appConfig = new AppConfig();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("calendar-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 590, 340);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), Integer.parseInt(appConfig.getProperty("app.resolution_h")), Integer.parseInt(appConfig.getProperty("app.resolution_w")));
+        stage.setTitle(appConfig.getProperty("app.title"));
         stage.setScene(scene);
         stage.show();
     }
-
-
 
 
     public static void main(String[] args) {

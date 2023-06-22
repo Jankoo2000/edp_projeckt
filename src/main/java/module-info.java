@@ -8,10 +8,11 @@ module com.example.edp_projeckt {
     requires org.apache.commons.lang3;
     requires java.persistence;
     requires java.sql;
+    requires com.google.common;
 
     // dodawac wszsytkie package
     opens com.example.edp_projeckt to javafx.fxml;
-    opens com.example.edp_projeckt.controllers to javafx.fxml;
+    opens com.example.edp_projeckt.controllers to javafx.fxml, com.google.common;
     opens com.example.edp_projeckt.api to javafx.fxml, com.fasterxml.jackson.databind;
 
     exports com.example.edp_projeckt;

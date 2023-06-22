@@ -4,6 +4,7 @@ import com.example.edp_projeckt.Main;
 import com.example.edp_projeckt.api.ApiFetch;
 import com.example.edp_projeckt.api.Exercise;
 import com.example.edp_projeckt.data_base.SqlManager;
+import com.google.common.eventbus.EventBus;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -48,6 +49,7 @@ public class ExerciseController {
     SqlManager sqlManager = new SqlManager();
     Date selectedDate;
     String sets, reps;
+    private EventBus eventBus;
 
     public ExerciseController() throws SQLException {
     }

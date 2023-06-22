@@ -30,7 +30,6 @@ public class SqlManager implements SqlManagerInterface{
             executeQuery(connection, createExerciseTableQuery);
 
 
-            System.out.println("Baza danych została utworzona.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
