@@ -9,10 +9,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="433.0" prefWidth="1085.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.edp_projeckt.controllers.ExerciseController">
    <children>
-      <Button fx:id="fetchDataButton" layoutX="589.0" layoutY="21.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Wczytaj API" />
+      <Button fx:id="fetchDataButton" layoutX="589.0" layoutY="21.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="149.0" text="Load API" />
       <Label fx:id="label1" layoutX="795.0" layoutY="26.0" text="Label" />
       <Label fx:id="label2" layoutX="795.0" layoutY="89.0" text="Label" />
-      <Button fx:id="showText" layoutX="589.0" layoutY="84.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Pokaz napis" />
+      <Button fx:id="showText" layoutX="589.0" layoutY="84.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" text="Caption" />
       <ChoiceBox fx:id="choiceBoxType" layoutX="14.0" layoutY="21.0" prefWidth="150.0" />
       <ChoiceBox fx:id="choiceBoxMuscle" layoutX="198.0" layoutY="21.0" prefWidth="150.0" />
       <ChoiceBox fx:id="choiceBoxDifficulty" layoutX="388.0" layoutY="21.0" prefWidth="150.0" />

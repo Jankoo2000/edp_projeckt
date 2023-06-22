@@ -6,6 +6,8 @@ module com.example.edp_projeckt {
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.lang3;
+    requires java.persistence;
+    requires java.sql;
 
     // dodawac wszsytkie package
     opens com.example.edp_projeckt to javafx.fxml;
