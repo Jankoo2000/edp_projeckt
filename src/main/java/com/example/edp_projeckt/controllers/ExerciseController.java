@@ -34,9 +34,7 @@ import java.util.stream.Collectors;
 
 public class ExerciseController {
     @FXML
-    private Label label1, label2;
-    @FXML
-    private Button fetchDataButton, showText, calendarButton;
+    private Button fetchDataButton, calendarButton;
     @FXML
     private TableView<Exercise> tableViewExercises;
     @FXML
@@ -56,7 +54,7 @@ public class ExerciseController {
 
 
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize() {
         initTableView();
         choiceBoxType.getItems().addAll(types);
         choiceBoxMuscle.getItems().addAll(muslces);
@@ -69,18 +67,13 @@ public class ExerciseController {
             }
         });
 
-
         choiceBoxType.setOnAction(e -> {
             String selectedOption = choiceBoxType.getValue();
         });
 
-        showText.setOnAction(e -> {
-
-            label2.setText(String.valueOf((Math.random())));
-        });
 
         fetchDataButton.setOnAction(e -> {
-            label1.setText("Waiting for data...");
+
             Task<List<Exercise>> fetchDataTask = new Task<List<Exercise>>() {
                 @Override
                 protected List<Exercise> call() throws Exception {
@@ -146,7 +139,7 @@ public class ExerciseController {
 
         ObservableList<Exercise> data = FXCollections.observableArrayList(exerciseList);
         tableViewExercises.setItems(data);
-        label1.setText("Loaded");
+
     }
 
     private Optional<Pair<String, String>> setCheckboxAction(ChoiceBox<String> choiceBox) {

@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SqlManager {
+public class SqlManager implements SqlManagerInterface{
     private final String url = "jdbc:sqlite:D://EDP_projekt//edp_projeckt//mydatabase.db";
     private final Connection connection = DriverManager.getConnection(url);
 

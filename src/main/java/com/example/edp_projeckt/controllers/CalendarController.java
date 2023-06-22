@@ -54,7 +54,7 @@ public class CalendarController implements Initializable {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("exercise-view.fxml"));
             try {
-                stage.setScene(new Scene(fxmlLoader.load(), 1150, 400));
+                stage.setScene(new Scene(fxmlLoader.load(), 1100, 370));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
