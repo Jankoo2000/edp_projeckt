@@ -1,1 +1,1 @@
-EDP project - trainig app
+EDP project - training app
